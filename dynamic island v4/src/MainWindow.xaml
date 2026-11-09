@@ -1,0 +1,198 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize"
+ShowActivated="False" Width="490" Height="380" Title="Dynamic Island">
+ <Grid>
+ <StackPanel x:Name="Root" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+   <Border x:Name="Island" Background="#000000" CornerRadius="18" Width="150" Height="36"
+           VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,6,0,0">
+     <Border.Effect>
+       <DropShadowEffect BlurRadius="14" ShadowDepth="0" Opacity="0.45"/>
+     </Border.Effect>
+     <Grid ClipToBounds="True">
+       <TextBlock x:Name="Small" Foreground="White" FontSize="14" FontWeight="SemiBold" Margin="8,0"
+                  TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+       <Grid x:Name="Big" Opacity="0" Margin="20,0" IsHitTestVisible="False">
+         <Grid.RowDefinitions>
+           <RowDefinition Height="*"/>
+           <RowDefinition Height="Auto"/>
+         </Grid.RowDefinitions>
+         <StackPanel x:Name="BigL" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+           <TextBlock x:Name="BigTime" FontSize="36" FontWeight="Light" Foreground="White"/>
+           <TextBlock x:Name="BigDate" FontSize="12" Foreground="#FF9A9AA0"/>
+           <TextBlock x:Name="BigDndStatus" FontSize="11" Foreground="#FF30D158" Margin="0,3,0,0" Visibility="Collapsed"/>
+         </StackPanel>
+         <StackPanel x:Name="BigR" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
+           <TextBlock x:Name="Bat" FontSize="13" Foreground="#FF30D158" HorizontalAlignment="Right"/>
+           <TextBlock x:Name="Cpu" FontSize="13" Foreground="#FF0A84FF" HorizontalAlignment="Right" Margin="0,3,0,0"/>
+           <TextBlock x:Name="Ram" FontSize="13" Foreground="#FFFF9F0A" HorizontalAlignment="Right" Margin="0,3,0,0"/>
+         </StackPanel>
+         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,8">
+           <Grid x:Name="DndBar" VerticalAlignment="Center">
+             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+               <TextBlock x:Name="BtnDndClock" Text="🌙" FontSize="16" Foreground="White" Cursor="Hand" Background="Transparent" Padding="6,3" Margin="-6,0,4,0" ToolTip="Таймер 'Не беспокоить'"/>
+               <TextBlock x:Name="DndLabel" Visibility="Collapsed" Text="Не беспокоить" FontSize="12" Foreground="#FFE5E5EA" VerticalAlignment="Center" FontWeight="Medium"/>
+             </StackPanel>
+             <Border x:Name="DndSwitch" Visibility="Collapsed" Width="36" Height="20" CornerRadius="10" Background="#FF3A3A3C"
+                     Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Center">
+               <Ellipse x:Name="DndKnob" Width="16" Height="16" Fill="White" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+             </Border>
+           </Grid>
+           <Border x:Name="BtnClipBar" Background="#1C1C1E" CornerRadius="8" Padding="9,4" Cursor="Hand" VerticalAlignment="Center" ToolTip="Буфер обмена">
+             <TextBlock Text="📋" FontSize="14" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+           </Border>
+           <Border x:Name="BtnScreenBar" Background="#1C1C1E" CornerRadius="8" Padding="9,4" Margin="6,0,0,0" Cursor="Hand" VerticalAlignment="Center" ToolTip="Скриншот">
+             <TextBlock Text="📷" FontSize="14" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+           </Border>
+         </StackPanel>
+       </Grid>
+       <Grid x:Name="Mini" Opacity="0" Margin="12,0" IsHitTestVisible="False">
+         <Border x:Name="MiniArt" Width="24" Height="24" CornerRadius="6" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#FF2C2C2E">
+           <Border CornerRadius="6"><Border.Background><ImageBrush x:Name="ArtMini" Stretch="UniformToFill"/></Border.Background></Border>
+         </Border>
+         <StackPanel x:Name="MiniBars" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+           <Rectangle x:Name="Bar1" Width="3" Height="6" RadiusX="1.5" RadiusY="1.5" Fill="#FF30D158" Margin="1.5,0"/>
+           <Rectangle x:Name="Bar2" Width="3" Height="10" RadiusX="1.5" RadiusY="1.5" Fill="#FF30D158" Margin="1.5,0"/>
+           <Rectangle x:Name="Bar3" Width="3" Height="14" RadiusX="1.5" RadiusY="1.5" Fill="#FF30D158" Margin="1.5,0"/>
+           <Rectangle x:Name="Bar4" Width="3" Height="8" RadiusX="1.5" RadiusY="1.5" Fill="#FF30D158" Margin="1.5,0"/>
+         </StackPanel>
+       </Grid>
+       <Grid x:Name="BigMusic" Opacity="0" Margin="20,0" IsHitTestVisible="False">
+         <Grid.ColumnDefinitions>
+           <ColumnDefinition Width="Auto"/>
+           <ColumnDefinition Width="*"/>
+         </Grid.ColumnDefinitions>
+         <Border x:Name="MusicArt" Grid.Column="0" Width="76" Height="76" CornerRadius="12" VerticalAlignment="Center" Background="#FF2C2C2E">
+           <Border CornerRadius="12"><Border.Background><ImageBrush x:Name="ArtBig" Stretch="UniformToFill"/></Border.Background></Border>
+         </Border>
+         <StackPanel x:Name="MusicText" Grid.Column="1" VerticalAlignment="Center" Margin="14,0,0,0">
+           <TextBlock x:Name="Title" FontSize="15" FontWeight="SemiBold" Foreground="White" TextTrimming="CharacterEllipsis"/>
+           <TextBlock x:Name="Artist" FontSize="12" Foreground="#FF9A9AA0" TextTrimming="CharacterEllipsis"/>
+           <ProgressBar x:Name="Prog" Height="4" Minimum="0" Maximum="1" Value="0" Margin="0,9,0,0"
+                        Foreground="White" Background="#FF3A3A3C" BorderThickness="0"/>
+           <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,4,0,0">
+             <TextBlock x:Name="BtnPrev" Text="&#xE892;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="White" Background="Transparent" Padding="10,4" Cursor="Hand"/>
+             <TextBlock x:Name="BtnPlay" Text="&#xE769;" FontFamily="Segoe MDL2 Assets" FontSize="22" Foreground="White" Background="Transparent" Padding="10,2" Cursor="Hand"/>
+             <TextBlock x:Name="BtnNext" Text="&#xE893;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="White" Background="Transparent" Padding="10,4" Cursor="Hand"/>
+             <TextBlock x:Name="BtnDnd" Text="🌙" FontSize="16" Foreground="White" Opacity="0.4" Background="Transparent" Padding="10,4" Cursor="Hand" VerticalAlignment="Center" ToolTip="Наведите для выбора таймера"/>
+             <TextBlock x:Name="BtnClipM" Text="📋" FontSize="16" Foreground="White" Background="Transparent" Padding="10,4" Cursor="Hand" VerticalAlignment="Center" ToolTip="Буфер обмена"/>
+             <TextBlock x:Name="BtnScreenM" Text="📷" FontSize="16" Foreground="White" Background="Transparent" Padding="10,4" Cursor="Hand" VerticalAlignment="Center" ToolTip="Скриншот"/>
+           </StackPanel>
+         </StackPanel>
+       </Grid>
+       <Grid x:Name="Notif" Opacity="0" Margin="16,0" IsHitTestVisible="False">
+         <Grid.ColumnDefinitions>
+           <ColumnDefinition Width="Auto"/>
+           <ColumnDefinition Width="*"/>
+         </Grid.ColumnDefinitions>
+         <Border x:Name="NotifArt" Grid.Column="0" Width="48" Height="48" CornerRadius="12" VerticalAlignment="Center" Background="#FF2C2C2E">
+           <Border CornerRadius="12"><Border.Background><ImageBrush x:Name="NotifIcon" Stretch="Uniform"/></Border.Background></Border>
+         </Border>
+         <StackPanel x:Name="NotifText" Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+           <TextBlock x:Name="NotifApp" FontSize="11" Foreground="#FF9A9AA0" TextTrimming="CharacterEllipsis"/>
+           <TextBlock x:Name="NotifTitle" FontSize="14" FontWeight="SemiBold" Foreground="White" TextTrimming="CharacterEllipsis"/>
+           <TextBlock x:Name="NotifBody" FontSize="12" Foreground="#FFD1D1D6" TextTrimming="CharacterEllipsis"/>
+         </StackPanel>
+       </Grid>
+       <Grid x:Name="Msg" Opacity="0" Margin="14,0" IsHitTestVisible="False">
+         <Grid.ColumnDefinitions>
+           <ColumnDefinition Width="Auto"/>
+           <ColumnDefinition Width="*"/>
+         </Grid.ColumnDefinitions>
+         <Border x:Name="MsgIcon" Grid.Column="0" Width="38" Height="38" CornerRadius="19" Background="#FF30D158"
+                 VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+           <Border.RenderTransform><ScaleTransform ScaleX="1" ScaleY="1"/></Border.RenderTransform>
+           <TextBlock x:Name="MsgGlyph" FontFamily="Segoe MDL2 Assets" Text="&#xE8C8;" FontSize="18" Foreground="White"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+         </Border>
+         <StackPanel x:Name="MsgText" Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+           <TextBlock x:Name="MsgTitle" Text="Скопировано" FontSize="15" FontWeight="SemiBold" Foreground="White"/>
+           <TextBlock x:Name="MsgSub" FontSize="11" Foreground="#FF9A9AA0" TextTrimming="CharacterEllipsis"/>
+         </StackPanel>
+       </Grid>
+     </Grid>
+   </Border>
+   <Border x:Name="ScreenIsland" Background="#000000" CornerRadius="18" Width="36" Height="36"
+           VerticalAlignment="Center" HorizontalAlignment="Center" Margin="6,6,0,6" Cursor="Hand" ToolTip="Сделать скриншот">
+     <Border.Effect>
+       <DropShadowEffect BlurRadius="14" ShadowDepth="0" Opacity="0.45"/>
+     </Border.Effect>
+     <TextBlock x:Name="ScreenIcon" Text="📷" FontSize="15" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+   </Border>
+ </StackPanel>
+ <!-- Дочерний островок: буфер обмена -->
+ <Border x:Name="ClipIsland" Visibility="Collapsed" Opacity="0" Background="#000000" CornerRadius="18"
+         Width="340" Height="190" HorizontalAlignment="Left" VerticalAlignment="Top">
+   <Border.RenderTransform><TranslateTransform x:Name="ClipTranslate" X="0" Y="0"/></Border.RenderTransform>
+   <Border.Effect>
+     <DropShadowEffect BlurRadius="14" ShadowDepth="0" Opacity="0.45"/>
+   </Border.Effect>
+   <Grid ClipToBounds="True">
+     <Grid x:Name="Clip" Margin="14,10">
+       <Grid.RowDefinitions>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="*"/>
+       </Grid.RowDefinitions>
+       <Grid Grid.Row="0" Margin="0,0,0,6">
+         <Grid.ColumnDefinitions>
+           <ColumnDefinition Width="*"/>
+           <ColumnDefinition Width="Auto"/>
+         </Grid.ColumnDefinitions>
+         <TextBlock x:Name="ClipTitle" Grid.Column="0" Text="📋 Буфер обмена" Foreground="White" FontWeight="SemiBold"
+                    FontSize="13" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+         <StackPanel Grid.Column="1" Orientation="Horizontal">
+           <TextBlock x:Name="ClipPause" Text="⏸" Foreground="#FFBBBBBB" FontSize="13" Padding="6,2" Cursor="Hand" Background="Transparent" ToolTip="Пауза записи"/>
+           <TextBlock x:Name="ClipClear" Text="🗑" Foreground="#FFBBBBBB" FontSize="13" Padding="6,2" Cursor="Hand" Background="Transparent" ToolTip="Очистить"/>
+           <TextBlock x:Name="ClipClose" Text="✕" Foreground="#FFBBBBBB" FontSize="13" Padding="6,2" Cursor="Hand" Background="Transparent" ToolTip="Закрыть"/>
+         </StackPanel>
+       </Grid>
+       <ScrollViewer x:Name="ClipScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+         <StackPanel x:Name="ClipList"/>
+       </ScrollViewer>
+     </Grid>
+   </Grid>
+ </Border>
+ <!-- Дочерний островок: Выбор таймера ДНД -->
+ <Border x:Name="DndIsland" Visibility="Collapsed" Opacity="0" Background="#0A0A0C" CornerRadius="18"
+         Width="290" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top">
+   <Border.RenderTransform><TranslateTransform x:Name="DndTranslate" X="0" Y="0"/></Border.RenderTransform>
+   <Border.Effect>
+     <DropShadowEffect BlurRadius="16" ShadowDepth="0" Opacity="0.5"/>
+   </Border.Effect>
+   <Grid ClipToBounds="True" Margin="14,10">
+     <Grid.RowDefinitions>
+       <RowDefinition Height="Auto"/>
+       <RowDefinition Height="*"/>
+     </Grid.RowDefinitions>
+     <Grid Grid.Row="0" Margin="0,0,0,8">
+       <StackPanel Orientation="Horizontal">
+         <TextBlock Text="🌙" FontSize="13" Margin="0,0,5,0" VerticalAlignment="Center"/>
+         <TextBlock Text="Режим тишины" Foreground="White" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
+       </StackPanel>
+       <TextBlock x:Name="DndClose" Text="✕" Foreground="#FF8E8E93" FontSize="12" HorizontalAlignment="Right" Cursor="Hand" Padding="4,0"/>
+     </Grid>
+     <UniformGrid Grid.Row="1" Columns="3" Rows="2">
+       <Border x:Name="DndMenu15" Background="#1C1C1E" CornerRadius="10" Margin="2" Cursor="Hand">
+         <TextBlock Text="15 мин" Foreground="White" FontSize="12" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+       </Border>
+       <Border x:Name="DndMenu30" Background="#1C1C1E" CornerRadius="10" Margin="2" Cursor="Hand">
+         <TextBlock Text="30 мин" Foreground="White" FontSize="12" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+       </Border>
+       <Border x:Name="DndMenu60" Background="#1C1C1E" CornerRadius="10" Margin="2" Cursor="Hand">
+         <TextBlock Text="1 час" Foreground="White" FontSize="12" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+       </Border>
+       <Border x:Name="DndMenu120" Background="#1C1C1E" CornerRadius="10" Margin="2" Cursor="Hand">
+         <TextBlock Text="2 часа" Foreground="White" FontSize="12" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+       </Border>
+       <Border x:Name="DndMenuMorning" Background="#1C1C1E" CornerRadius="10" Margin="2" Cursor="Hand">
+         <TextBlock Text="До утра" Foreground="#FF30D158" FontSize="12" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+       </Border>
+       <Border x:Name="DndMenuReset" Background="#2C2C2E" CornerRadius="10" Margin="2" Cursor="Hand">
+         <TextBlock Text="Сброс" Foreground="#FFFF453A" FontSize="12" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+       </Border>
+     </UniformGrid>
+   </Grid>
+ </Border>
+</Grid>
+</Window>
