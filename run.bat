@@ -1,2 +1,2 @@
 @echo off
-start "" powershell -NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File "%~dp0DynamicIsland.ps1"
+start "" powershell -NoProfile -ExecutionPolicy Bypass -STA -File "%~dp0DynamicIsland.ps1"
